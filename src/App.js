@@ -1,31 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import QuoteMachine from './components/QuoteMachine';
+import colors from "./api/colors.js"
+import quotes from "./api/quotes.js"
 
 
 
 function App() {
   
-const colors = [
-  '#16a085',
-  '#27ae60',
-  '#2c3e50',
-  '#f39c12',
-  '#e74c3c',
-  '#9b59b6',
-  '#FB6964',
-  '#342224',
-  '#472E32',
-  '#BDBB99',
-  '#77B1A9',
-  '#73A857'
-];
+
   const url = "https://gist.githubusercontent.com/camperbot/5a022b72e96c4c9585c32bf6a75f62d9/raw/e3c6895ce42069f0ee7e991229064f167fe8ccdc/quotes.json"
-  const [data, setData] = useState(null)
+  // const [data, setData] = useState(null)
   const [quote, setQuote] = useState("");
   const [author, setAuthor] = useState("");
 
-  useEffect(() => callQuotes, []);
+  // useEffect(() => callQuotes, []);
   useEffect(()=>{
     const color = colors[Math.floor(Math.random()*colors.length)]
     document.body.style.backgroundColor = color;
@@ -36,21 +25,27 @@ const colors = [
     document.getElementById("author").style.color = color;
 
   },[quote])
+
+  useEffect(()=>{
+    const random = Math.floor(Math.random() * quotes.quotes.length);
+    setQuote(quotes.quotes[random].quote);
+    setAuthor(quotes.quotes[random].author);
+  },[])
   
-  const callQuotes = async () => {
-    const response = await fetch(url);
-    const info = await response.json();
-    setData(info.quotes);
-    const random = Math.round(Math.random() * info.quotes.length)
-    setQuote(info.quotes[random].quote);
-    setAuthor(info.quotes[random].author);
+  // const callQuotes = async () => {
+  //   const response = await fetch(url);
+  //   const info = await response.json();
+  //   setData(info.quotes);
+  //   const random = Math.round(Math.random() * info.quotes.length)
+  //   setQuote(info.quotes[random].quote);
+  //   setAuthor(info.quotes[random].author);
     
-  }
+  // }
 
   const newQuote = () => {
-    const random = Math.floor(Math.random() * data.length);
-    setQuote(data[random].quote);
-    setAuthor(data[random].author);
+    const random = Math.floor(Math.random() * quotes.quotes.length);
+    setQuote(quotes.quotes[random].quote);
+    setAuthor(quotes.quotes[random].author);
   }
 
   return (
