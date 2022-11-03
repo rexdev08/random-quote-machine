@@ -1,0 +1,85 @@
+.QuoteBox{
+    width: min(600px, 90vw);
+    // min-height: 300px;
+    background-color: #fafafa;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+    align-content: space-between;
+    padding: 3rem;
+    padding-top: 2.5rem;
+    // color: inherit;
+    gap: 1.5rem;
+    border-radius: .3rem;
+
+}
+
+.text{
+    width:100%;
+    // min-height: 50%;
+    font-size: clamp(16px, 10vw, 28px);
+    font-weight: 800;
+    // font-style: italic;
+    text-align: center;
+    // background-color:red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+
+
+
+.author{
+    font-size: clamp(12px, 10vw, 18px);
+    font-weight: 500;
+    width: 100%;
+    text-align: end;
+}
+
+.buttons{
+    height: 40px;
+   display: flex;
+   flex-flow: row wrap;
+   justify-content: space-between;
+   align-items: center;
+//    background-color: red;
+//    padding: 1rem;
+ 
+}
+
+.social{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .5rem;
+}
+
+.tweet{
+    height: 100%;
+  padding: .6rem;
+  border-radius: .2rem;
+    background-color: rgb(142, 11, 11);
+    color: #fafafa;
+}
+
+.tumblr{
+    height: 100%;
+    padding: .6rem;
+    border-radius: .2rem;
+      background-color: rgb(142, 11, 11);
+      color: #fafafa;
+  }
+
+.quoteBtn{
+    height: 100%;
+    font-size: clamp(12px, 10vw, 18px);
+    padding: .6rem;
+    border-radius: .2rem;
+    //   background-color: rgb(142, 11, 11);
+      color: #fafafa;
+      border: none;
+      cursor: pointer;
+}
+
