@@ -1,59 +1,77 @@
-import React, { useState, useEffect } from 'react';
-import './App.css';
-import QuoteMachine from './components/QuoteMachine';
-import colors from "./api/colors.js"
-import quotes from "./api/quotes.js"
-
-
+import React, { useState, useEffect } from "react";
+import QuoteMachine from "./components/QuoteMachine";
+import styled from "styled-components";
+import colors from "./helpers/colors";
 
 function App() {
-  
+  const url =
+    "https://gist.githubusercontent.com/camperbot/5a022b72e96c4c9585c32bf6a75f62d9/raw/e3c6895ce42069f0ee7e991229064f167fe8ccdc/quotes.json";
 
-  const url = "https://gist.githubusercontent.com/camperbot/5a022b72e96c4c9585c32bf6a75f62d9/raw/e3c6895ce42069f0ee7e991229064f167fe8ccdc/quotes.json"
-  // const [data, setData] = useState(null)
-  const [quote, setQuote] = useState("");
-  const [author, setAuthor] = useState("");
+  const [info, setInfo] = useState([]);
+  const [ramdon, setRandom] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [color, setColor] = useState(null);
 
-  // useEffect(() => callQuotes, []);
-  useEffect(()=>{
-    const color = colors[Math.floor(Math.random()*colors.length)]
-    document.body.style.backgroundColor = color;
-    document.getElementById("text").style.color = color;
-    document.getElementById("tweet-quote").style.backgroundColor = color;
-    document.getElementById("tumblr-quote").style.backgroundColor = color;
-    document.getElementById("new-quote").style.backgroundColor = color;
-    document.getElementById("author").style.color = color;
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(url);
+      const data = await response.json();
+      setInfo(data.quotes);
+      setLoading(false);
+    };
 
-  },[quote])
+    fetchData();
+  }, []);
 
-  useEffect(()=>{
-    const random = Math.floor(Math.random() * quotes.quotes.length);
-    setQuote(quotes.quotes[random].quote);
-    setAuthor(quotes.quotes[random].author);
-  },[])
-  
-  // const callQuotes = async () => {
-  //   const response = await fetch(url);
-  //   const info = await response.json();
-  //   setData(info.quotes);
-  //   const random = Math.round(Math.random() * info.quotes.length)
-  //   setQuote(info.quotes[random].quote);
-  //   setAuthor(info.quotes[random].author);
-    
-  // }
+  useEffect(() => {
+    const colorRamdon = colors[Math.floor(Math.random() * colors.length)];
 
-  const newQuote = () => {
-    const random = Math.floor(Math.random() * quotes.quotes.length);
-    setQuote(quotes.quotes[random].quote);
-    setAuthor(quotes.quotes[random].author);
+    document.body.style.backgroundColor = colorRamdon;
+    setColor(colorRamdon);
+  }, [ramdon]);
+
+  if (!loading) {
+    return (
+      <AppContainer>
+        <div>
+          <QuoteMachine
+            info={info[ramdon]}
+            color={color}
+            clickHandler={() =>
+              setRandom(Math.floor(Math.random() * info.length))
+            }
+          />
+          <Link
+            className="link"
+            rel="noreferrer"
+            href="https://rexdev08.github.io/"
+            target="_blank"
+          >
+            <span>Hecho por Raimundo Rincon</span>
+          </Link>
+        </div>
+      </AppContainer>
+    );
   }
-
-  return (
-    <div className="App">
-      <QuoteMachine text={quote} author={author} clickHandler={() => newQuote()} />
-      <a className='link' rel="noreferrer" href='https://rexdev08.github.io/' target="_blank"><span>Hecho por Raimundo Rincon</span></a>
-    </div>
-  );
 }
+
+const AppContainer = styled.div`
+  height: 100vh;
+  background-color: red;
+  display: grid;
+  place-items: center;
+  background-color: transparent;
+`;
+
+const Link = styled.a`
+  text-decoration: none;
+  text-align: center;
+  display: block;
+  margin-top: 1rem;
+  font-size: 1.4rem;
+  font-weight:900;
+  color: #fafafa;
+  /* background-color: aqua; */
+`;
 
 export default App;
